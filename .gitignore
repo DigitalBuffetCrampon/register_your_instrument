@@ -1,0 +1,20 @@
+# Google Cloud SDK
+google-cloud-sdk/
+google-cloud-cli-*.tar.gz
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Claude / AI tools
+.claude/
+.agents/
+.aidesigner/
+.mcp.json
+
+# Données internes / DA source
+website_da/
+
+# Credentials & secrets
+*.json.key
+credentials/

@@ -1,0 +1,194 @@
+[
+  {
+    "name": "registration_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "UUID unique généré par n8n au moment de l'enregistrement"
+  },
+  {
+    "name": "contact_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Clé étrangère vers marketing.contacts.contact_id (PostgreSQL CDP)"
+  },
+  {
+    "name": "email",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Adresse email du musicien"
+  },
+  {
+    "name": "first_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Prénom"
+  },
+  {
+    "name": "last_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Nom de famille"
+  },
+  {
+    "name": "phone",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Numéro de téléphone (format brut, tel que saisi)"
+  },
+  {
+    "name": "address_line1",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Adresse ligne 1"
+  },
+  {
+    "name": "address_line2",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Adresse ligne 2"
+  },
+  {
+    "name": "city",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Ville"
+  },
+  {
+    "name": "state",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "État / Province / Région"
+  },
+  {
+    "name": "zip",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Code postal"
+  },
+  {
+    "name": "country_code",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Code pays ISO 3166-1 alpha-2 (ex: FR, US, DE)"
+  },
+  {
+    "name": "brand",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Marque de l'instrument. Valeurs : Buffet Crampon / Besson / B&S / Powell Flutes / Antoine Courtois"
+  },
+  {
+    "name": "instrument_family",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Famille d'instrument (Clarinet / Flute / Saxophone / Trumpet / Trombone / Horn…). Source : catalogue AX."
+  },
+  {
+    "name": "instrument_model",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Modèle exact de l'instrument (ex: R13, Prestige, RC). Source : catalogue AX."
+  },
+  {
+    "name": "serial_number_raw",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Numéro de série tel que saisi par l'utilisateur (valeur brute, jamais modifiée — archivistique)"
+  },
+  {
+    "name": "serial_number",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Numéro de série normalisé (uppercase, trimé, caractères spéciaux supprimés)"
+  },
+  {
+    "name": "sn_format_valid",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE",
+    "description": "Le format du SN correspond au pattern attendu pour la marque/famille. Non-bloquant : false = alerte interne uniquement."
+  },
+  {
+    "name": "dealer_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Nom du revendeur où l'instrument a été acheté (saisie libre)"
+  },
+  {
+    "name": "purchase_date",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "Date d'achat déclarée par le musicien (YYYY-MM-DD)"
+  },
+  {
+    "name": "marketing_consent",
+    "type": "BOOLEAN",
+    "mode": "REQUIRED",
+    "description": "Consentement à recevoir la newsletter RGPD (opt-in actif, case à cocher volontaire)"
+  },
+  {
+    "name": "privacy_accepted",
+    "type": "BOOLEAN",
+    "mode": "REQUIRED",
+    "description": "Acceptation de la politique de confidentialité (obligatoire pour soumettre le formulaire)"
+  },
+  {
+    "name": "consent_ip",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Adresse IP au moment de la soumission (preuve RGPD — ne jamais supprimer)"
+  },
+  {
+    "name": "consent_timestamp",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "Horodatage exact du consentement (= submitted_at en pratique, champ séparé pour traçabilité RGPD)"
+  },
+  {
+    "name": "submission_source",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Source de soumission (bc_website_eu / bc_website_us / bc_website_de / bc_website_jp / bc_website_cn)"
+  },
+  {
+    "name": "browser_language",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Langue du navigateur au moment de la soumission (ex: fr, en-US, de)"
+  },
+  {
+    "name": "email_valid",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE",
+    "description": "Résultat validation email (format regex + vérification MX). false = exclus des envois SFMC."
+  },
+  {
+    "name": "is_duplicate",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE",
+    "description": "Doublon détecté : même email + même serial_number déjà présents en BQ. true = ligne insérée pour traçabilité mais ignorée."
+  },
+  {
+    "name": "bot_score",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": "Score anti-bot (0 = humain certain, 1 = bot certain). Basé sur honeypot (1.0) + timing < 3s (0.8)."
+  },
+  {
+    "name": "warranty_offer_sent",
+    "type": "BOOLEAN",
+    "mode": "NULLABLE",
+    "description": "Email d'offre extension de garantie envoyé (via SFMC journey)"
+  },
+  {
+    "name": "warranty_offer_sent_at",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "Horodatage de l'envoi de l'offre extension garantie"
+  },
+  {
+    "name": "submitted_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "Horodatage de soumission du formulaire (partition key)"
+  }
+]
