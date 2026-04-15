@@ -941,27 +941,6 @@
             <div class="fs-legend">Your Instrument</div>
             <div class="field-grid">
 
-              <!-- Marque -->
-              <div class="field is-select col-full">
-                <select
-                  id="brand"
-                  name="brand"
-                  required
-                >
-                  <option value="" disabled selected></option>
-                  <option value="Buffet Crampon">Buffet Crampon</option>
-                  <option value="Powell Flutes">Powell Flutes</option>
-                  <option value="Besson">Besson</option>
-                  <option value="B&S">B&amp;S</option>
-                  <option value="Antoine Courtois">Antoine Courtois</option>
-                  <option value="Hans Hoyer">Hans Hoyer</option>
-                  <option value="Keilwerth">Keilwerth</option>
-                  <option value="W. Schreiber">W. Schreiber</option>
-                  <option value="Melton">Melton</option>
-                </select>
-                <label for="brand">Brand *</label>
-              </div>
-
               <!-- Famille d'instruments -->
               <div class="field is-select col-full">
                 <select
@@ -1188,19 +1167,18 @@
     }
 
     function getModels() {
-      var brand  = document.getElementById('brand').value;
       var family = document.getElementById('instrument_family').value;
 
-      // Aucune marque sélectionnée → tous les modèles de toutes les marques
-      if (!brand || !MODELS[brand]) return flatten(MODELS);
+      // Famille sélectionnée → modèles de toutes les marques pour cette famille
+      if (family) {
+        return Object.values(MODELS).reduce(function (acc, brandData) {
+          if (brandData[family]) return acc.concat(brandData[family]);
+          return acc;
+        }, []);
+      }
 
-      var brandData = MODELS[brand];
-
-      // Marque + famille → modèles de cette famille uniquement
-      if (family && brandData[family]) return brandData[family];
-
-      // Marque seule → tous les modèles de la marque
-      return Object.values(brandData).reduce(function (a, b) { return a.concat(b); }, []);
+      // Aucune famille → tous les modèles
+      return flatten(MODELS);
     }
 
     // ════════════════════════════════════════════════════════════
@@ -1297,11 +1275,9 @@
       setTimeout(closeList, 150);
     });
 
-    // Rafraîchit les suggestions si brand ou famille change
-    ['brand', 'instrument_family'].forEach(function (id) {
-      document.getElementById(id).addEventListener('change', function () {
-        if (acList.classList.contains('open')) renderList(acInput.value);
-      });
+    // Rafraîchit les suggestions si la famille change
+    document.getElementById('instrument_family').addEventListener('change', function () {
+      if (acList.classList.contains('open')) renderList(acInput.value);
     });
 
     // ════════════════════════════════════════════════════════════
